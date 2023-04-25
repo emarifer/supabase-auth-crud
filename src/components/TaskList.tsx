@@ -31,7 +31,7 @@ export const TaskList: Component = () => {
                   id={task.id.toString()}
                   type="checkbox"
                   checked={task.done}
-                  class="w-5 h-5 accent-purple-600"
+                  // class="w-5 h-5 accent-purple-600"
                   onclick={() => updateTask(task.id, task.done)}
                 />
 

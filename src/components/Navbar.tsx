@@ -1,13 +1,10 @@
 import type { Component } from "solid-js";
-import { Link } from "@solidjs/router";
 import { logout, logingOut, thereIsUser } from "../store";
 
 export const Navbar: Component = () => {
   return (
     <nav class="w-full h-16 px-6 md:px-12 flex justify-between items-center bg-slate-800 fixed top-0 left-0 right-0 z-50">
-      <Link class="text-2xl font-black" href="/">
-        Whattodo!
-      </Link>
+      <span class="text-2xl font-black cursor-pointer">Whattodo!</span>
 
       {thereIsUser() && (
         <button

@@ -2,6 +2,37 @@ import { createStore } from "solid-js/store";
 import { createSignal } from "solid-js";
 import { Task } from "../models";
 import { supabase } from "../supabase/client";
+import Swal from "sweetalert2";
+
+const errorAlert = (error: string) =>
+  Swal.fire({
+    background: "#292b2c",
+    color: "white",
+    title: "Error",
+    text: error,
+    icon: "error",
+    confirmButtonText: "Ok",
+  });
+
+const successAlert = (message: string) =>
+  Swal.fire({
+    background: "#292b2c",
+    color: "white",
+    title: "Action Completed",
+    text: message,
+    icon: "success",
+    confirmButtonText: "Ok",
+  });
+
+export const warningAlert = (info: string) =>
+  Swal.fire({
+    background: "#292b2c",
+    color: "white",
+    title: "Warning",
+    text: info,
+    icon: "warning",
+    confirmButtonText: "Ok",
+  });
 
 export const [taskList, setTaskList] = createStore([] as Task[]);
 
@@ -28,12 +59,12 @@ export const userSignUp = async (userEmail: string, userPassword: string) => {
 
     if (error) throw new Error(error.message);
 
-    alert("User created successfully!");
+    successAlert("User created successfully!");
 
     setThereIsUser(true);
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    alert(message);
+    errorAlert(message);
   } finally {
     setLoading(false);
   }
@@ -54,12 +85,12 @@ export const userSignIn = async (userEmail: string, userPassword: string) => {
 
     if (error) throw new Error(error.message);
 
-    alert("Login successful!");
+    successAlert("Login successful!");
 
     setThereIsUser(true);
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    alert(message);
+    errorAlert(message);
   } finally {
     setLoading(false);
   }
@@ -76,7 +107,7 @@ export const logout = async () => {
     setThereIsUser(false);
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    alert(message);
+    errorAlert(message);
   } finally {
     setLogingOut(false);
   }
@@ -102,7 +133,7 @@ export const createTask = async (taskName: string): Promise<void> => {
     }
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    alert(message);
+    errorAlert(message);
   } finally {
     setAdding(false);
   }
@@ -137,7 +168,7 @@ export const getTasks = async (): Promise<void> => {
     }
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    alert(message);
+    errorAlert(message);
   } finally {
     setLoading(false);
   }
@@ -173,7 +204,7 @@ export const updateTask = async (
     }
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    alert(message);
+    errorAlert(message);
   } finally {
     setUpdating(false);
   }
@@ -204,7 +235,7 @@ export const deleteTask = async (id: number): Promise<void> => {
     }
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
-    alert(message);
+    errorAlert(message);
   } finally {
     setDeleting(false);
   }

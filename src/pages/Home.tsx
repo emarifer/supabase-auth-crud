@@ -1,12 +1,10 @@
-import type { Component } from "solid-js";
-import { createSignal, onMount } from "solid-js";
+import { Component, createSignal, onMount } from "solid-js";
 import { TaskForm, TaskList } from "../components";
 import { setThereIsUser, showTasksDone, setShowTasksDone } from "../store";
 import { supabase } from "../supabase/client";
 
 export const Home: Component = () => {
   const [thereIsSession, setThereIsSession] = createSignal(false);
-
   onMount(() =>
     supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
@@ -19,7 +17,7 @@ export const Home: Component = () => {
   // onMount(async () => {
   //   // const userData = await supabase.auth.getUser();
   //   // if (userData.data.user) setThereIsUser(true);
-  // });{
+  // });
 
   return (
     <>

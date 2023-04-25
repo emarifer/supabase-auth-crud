@@ -1,9 +1,8 @@
 import type { Component } from "solid-js";
 import { createSignal } from "solid-js";
-import { Link } from "@solidjs/router";
-import { userSignIn, loading, warningAlert } from "../store";
+import { userSignUp, loading, warningAlert } from "../store";
 
-export const Login: Component = () => {
+export const SignUp: Component = () => {
   const [displayInput, setDisplayInput] = createSignal(false);
   const [email, setEmail] = createSignal("");
   const [password, setPassword] = createSignal("");
@@ -24,7 +23,7 @@ export const Login: Component = () => {
     (inputRefPassword as HTMLInputElement).focus();
   };
 
-  const handleSignIn = async () => {
+  const handleSignUp = async () => {
     if (0 <= password().trim().length && password().trim().length <= 5) {
       warningAlert("The password must be at least 6 characters!");
       inputRefPassword.value = "";
@@ -33,7 +32,7 @@ export const Login: Component = () => {
       return;
     }
 
-    await userSignIn(email(), password());
+    await userSignUp(email(), password());
 
     // console.log({
     //   email: email(),
@@ -44,8 +43,8 @@ export const Login: Component = () => {
   return (
     <div class="mx-auto w-full">
       <div class="mx-auto w-full">
-        <label class="text-xl font-semibold" for="signin-email">
-          SignIn
+        <label class="text-xl font-semibold" for="signup-email">
+          SignUp
         </label>
 
         <hr class="mb-4 border-t-2" />
@@ -57,7 +56,7 @@ export const Login: Component = () => {
                 autofocus
                 ref={inputRefEmail}
                 class="rounded-md focus:outline-none focus:ring focus:ring-blue-400 w-56 md:w-full text-xl px-4 py-2 bg-slate-700"
-                id="signin-email"
+                id="signup-email"
                 type="email"
                 required
                 onchange={(e) => setEmail(e.target.value)}
@@ -92,8 +91,8 @@ export const Login: Component = () => {
             </button>
           ) : (
             <button
-              title="SignIn"
-              onClick={handleSignIn}
+              title="SignUp"
+              onClick={handleSignUp}
               class="bg-sky-600 hover:bg-sky-400 rounded-md text-xl px-4 py-2"
             >
               {loading() ? (
@@ -111,19 +110,6 @@ export const Login: Component = () => {
           )}
         </div>
       </div>
-      <Link class="text-lg text-slate-600 font-semibold" href="/signup">
-        You do not have an account?
-      </Link>
     </div>
   );
 };
-
-/*
- * ASOCIACIÓN DE BUTTON Y FORMULARIO & FORMDATA. VER:
- * https://developer.mozilla.org/en-US/docs/Web/API/FormData/get
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#attributes
- *
- * CREACIÓN DE PÁGINA DE LOGIN CON SOLIDJS/SUPABASE. VER:
- * https://supabase.com/docs/guides/getting-started/tutorials/with-solidjs#set-up-a-login-component
- * https://supabase.com/docs/guides/auth/auth-magic-link
- */

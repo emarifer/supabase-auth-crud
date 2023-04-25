@@ -3,6 +3,7 @@ import { render } from "solid-js/web";
 import { Router } from "@solidjs/router";
 
 import "./index.css";
+import "sweetalert2/dist/sweetalert2.min.css";
 import App from "./App";
 
 const root = document.getElementById("root");
